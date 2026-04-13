@@ -1,0 +1,60 @@
+---
+title: "Freedom"
+format: html
+---
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(ggplot2)
+library(readr)
+library(readr)
+library(stringr)
+library(lubridate)
+library(dplyr)
+library(forcats)
+```
+
+```{r}
+freedom <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-02-22/freedom.csv')
+
+```
+
+
+
+```{r}
+library(tidyverse)
+library(here)
+library(ggplot2)
+freedom_df <- freedom
+
+world_map <- map_data("world")
+
+world_joined <- left_join(world_map, freedom_df, join_by(region == country))
+
+ggplot(world_joined, aes(x = long, y = lat, group = group, fill = Status)) +
+  geom_polygon(color="white", linewidth=0.1) +
+  theme_void() +
+  labs(
+    title= "Freedom Status by Country",
+    fill="Status"
+  )
+```
+
+library(tidyverse)
+library(here)
+library(ggplot2)
+hpi_df <- read_csv(here("data/hpi-tidy.csv"))|>
+mutate(Country=if_else(Country== "United States of America",
+                         true="USA",
+                         false=Country))
+world_map <-map_data("world")
+
+world_joined <- left_join(world_map, hpi_df, join_by(region==Country))
+
+  
+  ggplot(data=world_joined, aes(x=long, y=lat, group=group))+ 
+geom_polygon(aes(fill=Footprint))+
+  coord_map(projection = "mercator") +
+    scale_fill_viridis_c()
