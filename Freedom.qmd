@@ -16,22 +16,60 @@ library(dplyr)
 library(forcats)
 ```
 
+How do civil liberties and political rights vary across countries and regions, and how has global freedom changed over time?
+
 ```{r}
 freedom <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-02-22/freedom.csv')
 
 ```
+Cleaning Countries:
+```{r}
+freedom_df <- freedom |>
+  mutate(country = case_when(
+    
+    country == "United States of America" ~ "USA",
+    country == "Russian Federation" ~ "Russia",
+    country == "Viet Nam" ~ "Vietnam",
+    country == "Czechia" ~ "Czech Republic",
+    country == "Republic of Korea" ~ "South Korea",
+    country == "Democratic People's Republic of Korea" ~ "North Korea",
+    country == "Iran (Islamic Republic of)" ~ "Iran",
+    country == "Syrian Arab Republic" ~ "Syria",
+    country == "United Kingdom of Great Britain and Northern Ireland" ~ "UK",
+    country == "Congo" ~ "Republic of Congo",
+    country == "Cabo Verde" ~ "Cape Verde",
+    country == "Eswatini" ~ "Swaziland",
+    country == "Lao People's Democratic Republic" ~ "Laos",
+    country == "Micronesia (Federated States of)" ~ "Micronesia",
+    country == "United Republic of Tanzania" ~ "Tanzania",
+    country == "Bolivia (Plurinational State of)" ~ "Bolivia",
+    country == "Venezuela (Bolivarian Republic of)" ~ "Venezuela",
+    country == "Brunei Darussalam" ~ "Brunei",
+    country == "Saint Kitts and Nevis" ~ "Saint Kitts",
+    country == "Saint Vincent and the Grenadines" ~ "Saint Vincent",
+    country == "Trinidad and Tobago" ~ "Trinidad",
+    country == "CÃƒÂ´te dÃ¢â‚¬â„¢Ivoire" ~ "Ivory Coast",
+    country == "Republic of Moldova" ~ "Moldova",
+    country == "Antigua and Barbuda" ~ "Antigua",
+   
+    
+    TRUE ~ country
+  ))
+```
 
-
+How is freedom status distributed across countries in 2020?
 
 ```{r}
 library(tidyverse)
 library(here)
 library(ggplot2)
-freedom_df <- freedom
+
+freedom_2020 <- freedom_df |>
+  filter(year == 2020)
 
 world_map <- map_data("world")
 
-world_joined <- left_join(world_map, freedom_df, join_by(region == country))
+world_joined <- left_join(world_map, freedom_2020, join_by(region == country))
 
 ggplot(world_joined, aes(x = long, y = lat, group = group, fill = Status)) +
   geom_polygon(color="white", linewidth=0.1) +
@@ -41,20 +79,21 @@ ggplot(world_joined, aes(x = long, y = lat, group = group, fill = Status)) +
     fill="Status"
   )
 ```
+Ideas:
 
-library(tidyverse)
-library(here)
-library(ggplot2)
-hpi_df <- read_csv(here("data/hpi-tidy.csv"))|>
-mutate(Country=if_else(Country== "United States of America",
-                         true="USA",
-                         false=Country))
-world_map <-map_data("world")
 
-world_joined <- left_join(world_map, hpi_df, join_by(region==Country))
 
-  
-  ggplot(data=world_joined, aes(x=long, y=lat, group=group))+ 
-geom_polygon(aes(fill=Footprint))+
-  coord_map(projection = "mercator") +
-    scale_fill_viridis_c()
+How does political freedom differ across regions of the world 
+-plots by region, bar charts , density plots, ggplotly
+
+How are countries distributed across freedom categories
+
+
+
+“How has global political freedom changed over time, and how does it differ across regions?”
+
+Map (2020 snapshot) 
+Line plot: global average freedom over time
+Boxplot: freedom by region
+Density plot: distribution of scores
+Top/bottom countries ranking (lollipop)
