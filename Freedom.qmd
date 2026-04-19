@@ -63,6 +63,7 @@ How is freedom status distributed across countries in 2020?
 library(tidyverse)
 library(here)
 library(ggplot2)
+library(plotly)
 
 freedom_2020 <- freedom_df |>
   filter(year == 2020)
@@ -71,14 +72,95 @@ world_map <- map_data("world")
 
 world_joined <- left_join(world_map, freedom_2020, join_by(region == country))
 
-ggplot(world_joined, aes(x = long, y = lat, group = group, fill = Status)) +
+plot1 <- ggplot(world_joined, aes(x = long, y = lat, group = group, fill = Status, label = region)) +
   geom_polygon(color="white", linewidth=0.1) +
   theme_void() +
   labs(
     title= "Freedom Status by Country",
     fill="Status"
   )
+ggplotly(plot1)
 ```
+
+```{r}
+freedom_long <- freedom_df |>
+  pivot_longer(cols = c(CL, PR),
+               names_to = "metric",
+               values_to = "value")
+
+freedom_filtereddd <- freedom_df |>
+  filter(!is.na(CL) & !is.na(PR)) |>
+  group_by(country) |>
+  filter(n() >= 20)
+```
+
+```{r}
+library(shiny)
+library(tidyverse)
+
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      selectizeInput("countrychoose", label = "Choose Countries",
+                     choices = unique(freedom_long$country),
+                     selected = c("United States of America"),
+                     multiple = TRUE),
+      
+      sliderInput("yearchoose", "Select Year:",
+                  min = min(freedom_long$year),
+                  max = max(freedom_long$year),
+                  value = 2020,
+                  step = 1),
+      
+      actionButton("runappbutton", label = "Update Graph")
+    ),
+    
+    mainPanel(
+      plotOutput(outputId = "freedomplot")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  freedom_react <- eventReactive(input$runappbutton, {
+    freedom_long |>
+      filter(country %in% input$countrychoose,
+             year == input$yearchoose)
+  })
+  
+ output$freedomplot <- renderPlot({
+  
+  data <- freedom_filtereddd |>
+    filter(country %in% input$countrychoose,
+           year <= input$yearchoose)
+  
+  ggplot(data, aes(x = year)) +
+    
+    geom_line(aes(y = CL, color = "Civil Liberties", group = country),
+              linewidth = 1) +
+    
+    geom_line(aes(y = PR, color = "Political Rights", group = country),
+              linewidth = 1, linetype="dashed") +
+    
+    labs(
+      title = glue::glue("Freedom Trends up to {input$yearchoose}"),
+      x = "Year",
+      y = "Score"
+    ) +
+    
+    theme_minimal()
+})
+}
+
+shinyApp(ui, server)
+```
+
+
+
+
+
 Ideas:
 
 
@@ -90,9 +172,10 @@ How are countries distributed across freedom categories
 
 
 
-“How has global political freedom changed over time, and how does it differ across regions?”
+How has global political freedom changed over time, and how does it differ across regions?
 
-Map (2020 snapshot) 
+more ideas:
+Map 2020 snapshot
 Line plot: global average freedom over time
 Boxplot: freedom by region
 Density plot: distribution of scores
