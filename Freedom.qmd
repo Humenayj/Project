@@ -15,7 +15,7 @@ library(lubridate)
 library(dplyr)
 library(forcats)
 ```
-
+Overall Question:
 How do civil liberties and political rights vary across countries and regions, and how has global freedom changed over time?
 
 ```{r}
@@ -56,7 +56,7 @@ freedom_df <- freedom |>
     TRUE ~ country
   ))
 ```
-
+1st graph
 How is freedom status distributed across countries in 2020?
 
 ```{r}
@@ -73,10 +73,10 @@ world_map <- map_data("world")
 world_joined <- left_join(world_map, freedom_2020, join_by(region == country))
 
 plot1 <- ggplot(world_joined, aes(x = long, y = lat, group = group, fill = Status, label = region)) +
-  geom_polygon(color="white", linewidth=0.1) +
+  geom_polygon(colour="white", linewidth=0.1) +
   theme_void() +
   labs(
-    title= "Freedom Status by Country",
+    title= "Freedom Status by Country(2020)",
     fill="Status"
   )
 ggplotly(plot1)
@@ -94,6 +94,8 @@ freedom_filtereddd <- freedom_df |>
   filter(n() >= 20)
 ```
 
+final graph(Big Picture)
+How do civil liberties and political rights vary across countries and regions over time ? 
 ```{r}
 library(shiny)
 library(tidyverse)
@@ -157,12 +159,62 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 ```
 
+2nd graph
+More specifically for 2020, What is the distribution of Civil Liberties by Freedom Status(Not Free, Partly Free, Free)?
+```{r}
+ggplot(data=freedom_2020, aes(x = CL, fill = Status))   +
+  geom_density(alpha = 0.6) +
+  labs(
+    title = "Distribution of Civil Liberties by Freedom Status (2020)",
+    x = "Civil Liberties Score",
+    y = "Density"
+  ) +
+  theme_minimal()
+```
+3rd graph
+Now, following the last plot, What is the distribution of Political Rights by Freedom Status(Not Free, Partly Free, Free) in 2020?
+
+(How does it compare)
+
+```{r}
+ggplot(data=freedom_2020, aes(x = PR, fill = Status))   +
+  geom_density(alpha = 0.6) +
+  labs(
+    title = "Distribution of Political Rights by Freedom Status (2020)",
+    x = "Political Rights Score",
+    y = "Density"
+  ) +
+  theme_minimal()
+```
+Specific Time Periods Now, is there a time where there were more Free countries or is there a time when there were more Not Free Countries. 
+```{r}
+status_trend <- freedom_df |>
+  group_by(year, Status) |>
+  summarise(count = n())
+```
 
 
+```{r}
+ggplot(data=status_trend, aes(x = year, y = count, colour = Status)) +
+  geom_line(linewidth = 1) +
+  labs(
+    title = "Number of Free vs Not Free Countries Over Time",
+    x = "Year",
+    y = "Number of Countries"
+  ) +
+  theme_minimal()
+```
+2005-2010 looks pretty good. High amount of free countries, low amount of Not Free, higher partly Free
+
+Can look into specific regions after this now. 
+
+
+
+Work on Story better
 
 
 Ideas:
-
+starting at most recent year (2020) and observing relationships then looking more into other years and maybe regions. ****maybe average freedom by regions added up over time ?**
 
 
 How does political freedom differ across regions of the world 
