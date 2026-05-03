@@ -19,31 +19,25 @@ library(dplyr)
 library(forcats)
 ```
 
-**Introduction** This analysis uses the “Freedom in the World” dataset
-from Freedom House, compiled and shared through the TidyTuesday project
-by Arthur Cheib. The dataset provides annual country-level information
-on political rights and civil liberties from 1972 onward. It includes
-measures of freedom across 195 countries and 15 territories. It is one
-of the most widely used sources for evaluating global democracy and
-human rights.
+**Introduction** This analysis uses the “Freedom in the World” dataset from Freedom House and the United Nations by way of Arthur Cheib. The dataset provides annual country specific information on political rights and civil liberties from 1972 onward. It includes measures of freedom across 195 countries and 15 territories. It is the standard-setting comparative assessment of global political rights and civil liberties.
 
-For this analysis, I focus on civil liberties and political rights as
-the key drivers of overall freedom. I begin by examining the
-relationship between Civil Liberties (CL) and Political Rights (PR) in
-2020 to understand how these measures influence a country’s freedom
-classification. I then take a broader look over time, analyzing how CL
-and PR have evolved across years to identify trends in global freedom
-and determine whether countries are becoming more or less free.
+For this analysis, I focus on civil liberties and political rights as the key drivers of overall freedom. I begin by examining the
+relationship between Civil Liberties (CL) and Political Rights (PR) in 2020 to understand how these measures influence a country’s freedom
+classification. I then take a broader look over time analyzing how CL and PR have evolved across years to identify trends in global freedom and determine whether countries are becoming more or less free.
 
-**The main variables used are** country: The name of the country year:
-The year of observation CL (Civil Liberties): A score ranging from 1 to
-7, where 1 represents the highest level of freedom (most free) and 7
-represents the lowest level of freedom PR (Political Rights): A score
-ranging from 1 to 7, where 1 indicates strong political rights and 7
-indicates very limited or absent political rights Status: The overall
-classification of a country’s freedom level(Free (F), Partly Free (PF),
-or Not Free (NF) ) Region_Name: The United Nations region the country
-belongs to
+**Main Variables** 
+country: The name of the country 
+
+year: The year of observation 
+
+CL (Civil Liberties): A score ranging from 1 to 7, where 1 represents the highest level of freedom (most free) and 7
+represents the lowest level of freedom 
+
+PR (Political Rights): A score ranging from 1 to 7, where 1 indicates strong political rights and 7
+indicates very limited or absent political rights 
+
+Status: The overall classification of a country’s freedom level(Free (F), Partly Free (PF),
+or Not Free (NF) )
 
 **Overall Question:** How do civil liberties and political rights vary
 across countries and regions, and how has global freedom changed over
@@ -481,4 +475,14 @@ shinyApp(ui, server)
 
 **Conclusion:** In this analysis, examining global freedom trends helped illustrate how freedom status has changed across countries and regions from 1995 to 2020. The graphs show that Free countries are mostly in North America, Europe and Oceania while Not Free countries are more common in Africa and parts of the Middle East and Asia. The results suggest that global freedom was at its highest between 2005 and 2010, followed by a slight decline in more recent years. Both Civil Liberties and Political Rights follow very similar patterns. Both variables have higher scores in recent years,suggesting a decrease in overall freedom. However, these results may be affected by how freedom is measured and the limits of the dataset. If I had more time, I could look deeper into specific regions or countries to better understand what is specifically causing these changes over time.
 
-**Limitations:**
+**Limitations:** The first limitation of this dataset is bias since it is based on how freedom is defined and measured by the organization. Different groups may view political rights and civil liberties differently.
+
+Second, simplifying complex political situations into scores may not fully capture what is happening within a country. 
+
+Lastly, some countries may have missing or inconsistent data across the years whcih can effect comparisons across regions. Smaller regions can also be influenced heavily by one or two countries.
+
+*Future Research:* As mentioned previously, given more time, I would further explore specific countries or regions to better understand how their freedom scores change over time. This could help highlight patterns such as which countries are consistently improving or declining. I could also compare countries within the same region to see how their trends differ and identify any unusual patterns in the data.
+
+
+**AI Prompts**
+1. Help me find countries in my data that do not match the map (Used for Polygon Map)
