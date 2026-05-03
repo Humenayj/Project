@@ -105,6 +105,8 @@ plot1 <- ggplot(world_joined, aes(x = long, y = lat, group = group, fill = Statu
   )
 ggplotly(plot1, tooltip = "label")
 ```
+Interpretation:
+
 From the map, we can clearly see that Free countries are concentrated in North America, Europe, and Oceania, while Not Free countries are more common in Africa and parts of the Middle East and Asia. This highlights strong regional patterns in global freedom where certain areas consistently experience higher or lower levels of political rights and civil liberties.
 
 This map is effective because it provides a clear snapshot of freedom status across countries in 2020. A map would not be as useful for showing changes over time but it works well here since the goal is to display a single year overview. 
@@ -128,6 +130,8 @@ ggplot(data=freedom_2020, aes(x = CL, fill = Status))   +
   ) +
   theme_minimal()
 ```
+Interpretation:
+
 From this plot, we can see clear differences in Civil Liberties scores across the three freedom statuses in 2020. Not Free countries are mostly concentrated at higher scores with many around 6 and ranging from about 4 to 7. In contrast, Free countries are concentrated at the lowest scores, mainly around 1 and ranging from about 1 to 4. Partly Free countries fall in between, showing a wider spread across the middle values.
 
 A density plot works well here because it shows the overall distribution of scores rather than just counts. This makes it easier to see where most countries are concentrated and how much overlap exists between the groups. 
@@ -148,6 +152,8 @@ ggplot(data=freedom_2020, aes(x = PR, fill = Status))   +
   ) +
   theme_minimal()
 ```
+Interpretation:
+
 This plot shows a very similar pattern to the Civil Liberties distribution. Not Free countries are highly concentrated at the upper end with a peak around 7 and range between 4 and 7. Free countries are concentrated at the lower end with a peak around 1 and range between 1 and 4.
 
 Compared to the Civil Liberties plot, the separation between groups is even more clear here. Not Free countries are more tightly clustered at the highest scores which suggests that Political Rights may be slightly more extreme across categories. Overall, both plots show a strong relationship between freedom status and these two variables with Free countries consistently having low scores and Not Free countries having high scores.
@@ -210,6 +216,8 @@ ggplot(data=status_trend, aes(x = year, y = count, colour = Status)) +
   ) +
   theme_minimal()
 ```
+Interpretation:
+
 From the line plot, the period between 2005 and 2010 stands out as a strong period for global freedom. During this time, the number of Free countries is higher while the number of Not Free countries is lower. Partly Free countries are also relatively higher as well.
 
 After about 2015 to 2020, this pattern begins to shift. The number of Free countries levels off or slightly declines, while Not Free countries increase.The line plot is useful because it clearly shows how these Status' change over time.
@@ -248,6 +256,8 @@ plot5 <- ggplot(cl_region, aes(x = Region_Name, y = avg_CL, fill = period, label
 
 ggplotly(plot5, tooltip="label")
 ```
+Interpretation:
+
 This bar plot compares average Civil Liberties scores by region for 2005 to 2010 and 2015 to 2020. We can see that most regions have higher scores in 2015 to 2020 which means civil liberties have declined over time. This supports the earlier trend we saw in the line plot.
 
 Oceania is the only exception where the pattern is not as clear. This could be due to countries like Papua New Guinea having a larger impact on the Oceania countries.
@@ -278,11 +288,15 @@ plot6 <- ggplot(pr_region, aes(x = Region_Name, y = avg_PR, fill = period, label
 
 ggplotly(plot6, tooltip="label")
 ```
+Interpretation:
+
 This bar plot compares average Political Rights scores by region for 2005 to 2010 and 2015 to 2020. Most regions have higher scores in 2015 to 2020 which illustrates political rights have declined over time. This trend is very similar to what we saw with Civil Liberties.
 
 Oceania is again an exception, where the pattern is less clear and possibly due to countries like Papua New Guinea affecting the Oceania average.
 
 The bar plot is good for comparing regions but it is harder to see exact differences. Again, using ggplotly helps by showing exact values. Most regions increased by about 0.10 to 0.30 which showed a small decline in freedom. Asia changed the least, while the Americas and Oceania changed the most.
+
+Now we can go further and look at how Civil Liberties and Political Rights change over time for individual countries.
 
 **Graph #7**
 How do civil liberties and political rights vary across countries and regions over time ? 
@@ -364,7 +378,8 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 ```
 
-
+Interpretation: 
+This Shiny app allows users to explore how Civil Liberties and Political Rights change over time for selected countries. It shows both measures on a line plot which helps illustrate and compare trends. It is useful because it allows for both broad comparisons and more detailed exploration between countries as well as between Political Rights and Civil Liberties.
 
 
 
