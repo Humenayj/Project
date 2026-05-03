@@ -75,7 +75,6 @@ setdiff(freedom_df$country, map_data("world")$region)
 
 **1st graph**
 How is freedom status distributed across countries in 2020?
-##Add lab or description saying what F, NF and PF means or Rename it under colour
 ```{r}
 library(tidyverse)
 library(here)
@@ -104,7 +103,15 @@ plot1 <- ggplot(world_joined, aes(x = long, y = lat, group = group, fill = Statu
   )
 ggplotly(plot1, tooltip = "label")
 ```
+From the map, we can clearly see that Free countries are concentrated in North America, Europe, and Oceania, while Not Free countries are more common in Africa and parts of the Middle East and Asia. This highlights strong regional patterns in global freedom where certain areas consistently experience higher or lower levels of political rights and civil liberties.
 
+This map is effective because it provides a clear snapshot of freedom status across countries in 2020. A map would not be as useful for showing changes over time but it works well here since the goal is to display a single year overview. 
+
+Colour is used to distinguish between the three categories of freedom status. A qualitative color scale from the viridis palette is used because the categories Free, Partly Free, and Not Free are distinct groups and because it is colour blind friendly.
+
+One of the more challenging parts of creating this visualization was ensuring that country names matched between datasets. Using the setdiff function helped identify countries that were not properly matched and these names were adjusted so that all countries could be correctly displayed on the map.
+
+Finally, converting the plot to an interactive version using ggplotly adds value by allowing users to hover over each country and view its specific freedom status. This makes the visualization more engaging and provides great additional detail.
 
 **Graph #2**
 More specifically for 2020, What is the distribution of Civil Liberties by Freedom Status(Not Free, Partly Free, Free)?
@@ -177,13 +184,13 @@ status_trend <- freedom_df_2 |>
   group_by(year, Status) |>
   summarise(count = n())
 ```
-
+How has the number of Free, Partly Free, and Not Free countries changed globally from 1995 to 2020?
 ```{r}
 ggplot(data=status_trend, aes(x = year, y = count, colour = Status)) +
   geom_line(linewidth = 1) +
   scale_color_viridis_d()+
   labs(
-    title = "Number of Free vs Not Free Countries Over Time",
+    title = "Global Freedom Trends Over Time(1995–2020)",
     x = "Year",
     y = "Number of Countries"
   ) +
