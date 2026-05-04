@@ -1,5 +1,5 @@
 ---
-title: "Freedom"
+title: "Global Freedom"
 format: html
 editor: 
   markdown: 
@@ -77,17 +77,14 @@ freedom_df <- freedom |>
   )
 ```
 
-I used setdiff function to see what countries I was missing on my map
-when cleaning.
+I used the setdiff function to see what countries I was missing on my map when cleaning.
 
 ```{r}
 setdiff(freedom_df$country, map_data("world")$region)
 ```
 
-**Graph #1** For this first graph, the goal was to provide an overview
-of global freedom status in the most recent year available in the
-dataset, which happens to be 2020. It gives a starting point for
-understanding how countries are classified before looking at trends over
+**Graph #1** For this first graph, the goal was to provide an overview of global freedom status in the most recent year available in the
+dataset, which happens to be 2020. It gives a starting point for understanding how countries are classified before looking at trends over
 time.
 
 How is freedom status distributed across countries in 2020?
@@ -123,36 +120,21 @@ ggplotly(plot1, tooltip = "label")
 
 **Interpretation:**
 
-From the map, we can clearly see that Free countries are concentrated in
-North America, Europe, and Oceania, while Not Free countries are more
-common in Africa and parts of the Middle East and Asia. This highlights
-strong regional patterns in global freedom where certain areas
-consistently experience higher or lower levels of political rights and
+From the map, we can clearly see that Free countries are concentrated in North America, Europe, and Oceania, while Not Free countries are more common in Africa and parts of the Middle East and Asia. This highlights strong regional patterns in global freedom where certain areas consistently experience higher or lower levels of political rights and
 civil liberties.
 
-This map is effective because it provides a clear snapshot of freedom
-status across countries in 2020. A map would not be as useful for
-showing changes over time but it works well here since the goal is to
-display a single year overview.
+This map is effective because it provides a clear snapshot of freedom status across countries in 2020. A map would not be as useful for
+showing changes over time but it works well here since the goal is to display a single year overview.
 
-Colour is used to distinguish between the three categories of freedom
-status. A qualitative color scale from the viridis palette is used
-because the categories Free, Partly Free, and Not Free are distinct
-groups and because it is colour blind friendly.
+Colour is used to distinguish between the three categories of freedom status. A qualitative color scale from the viridis palette is used
+because the categories Free, Partly Free, and Not Free are distinct groups and because it is colour blind friendly.
 
-One of the more challenging parts of creating this visualization was
-ensuring that country names matched between datasets. Using the setdiff
-function helped identify countries that were not properly matched and
-these names were adjusted so that all countries could be correctly
-displayed on the map.
+One of the more challenging parts of creating this visualization was ensuring that country names matched between datasets. Using the setdiff function helped identify countries that were not properly matched and these names were adjusted so that all countries could be correctly displayed on the map.
 
-Finally, converting the plot to an interactive version using ggplotly
-adds value by allowing users to hover over each country and view its
-specific freedom status. This makes the visualization more engaging and
-provides great additional detail.
+Finally, converting the plot to an interactive version using ggplotly adds value by allowing users to hover over each country and view its
+specific freedom status. This makes the visualization more engaging and provides great additional detail.
 
-**Graph #2** More specifically for 2020, What is the distribution of
-Civil Liberties by Freedom Status(Not Free, Partly Free, Free)?
+**Graph #2** More specifically for 2020, What is the distribution of Civil Liberties by Freedom Status(Not Free, Partly Free, Free)?
 
 ```{r}
 ggplot(data=freedom_2020, aes(x = CL, fill = Status))   +
@@ -168,26 +150,13 @@ ggplot(data=freedom_2020, aes(x = CL, fill = Status))   +
 
 **Interpretation:**
 
-From this plot, we can see clear differences in Civil Liberties scores
-across the three freedom statuses in 2020. Not Free countries are mostly
-concentrated at higher scores with many around 6 and ranging from about
-4 to 7. In contrast, Free countries are concentrated at the lowest
-scores, mainly around 1 and ranging from about 1 to 4. Partly Free
-countries fall in between, showing a wider spread across the middle
-values.
+From this plot, we can see clear differences in Civil Liberties scoresacross the three freedom statuses in 2020. Not Free countries are mostly concentrated at higher scores with many around 6 and ranging from about 4 to 7. In contrast, Free countries are concentrated at the lowest scores, mainly around 1 and ranging from about 1 to 4. Partly Free countries fall in between, showing a wider spread across the middle values.
 
-A density plot works well here because it shows the overall distribution
-of scores rather than just counts. This makes it easier to see where
-most countries are concentrated and how much overlap exists between the
-groups.
+A density plot works well here because it shows the overall distribution of scores rather than just counts. This makes it easier to see where most countries are concentrated and how much overlap exists between the groups.
 
-This visualization is also useful because it sets up a direct comparison
-for the next plot. By understanding how Civil Liberties are distributed
-across statuses, we can now compare these patterns to Political Rights
-and see whether similar trends appear between the two variables.
+This visualization is also useful because it sets up a direct comparison for the next plot. By understanding how Civil Liberties are distributed across statuses, we can now compare these patterns to Political Rights and see whether similar trends appear between the two variables.
 
-**Graph #3** Now, following the last plot, What is the distribution of
-Political Rights by Freedom Status(Not Free, Partly Free, Free) in 2020?
+**Graph #3** Now, following the last plot, What is the distribution of Political Rights by Freedom Status(Not Free, Partly Free, Free) in 2020?
 
 ```{r}
 ggplot(data=freedom_2020, aes(x = PR, fill = Status))   +
@@ -203,27 +172,14 @@ ggplot(data=freedom_2020, aes(x = PR, fill = Status))   +
 
 **Interpretation:**
 
-This plot shows a very similar pattern to the Civil Liberties
-distribution. Not Free countries are highly concentrated at the upper
-end with a peak around 7 and range between 4 and 7. Free countries are
-concentrated at the lower end with a peak around 1 and range between 1
-and 4.
+This plot shows a very similar pattern to the Civil Liberties distribution. Not Free countries are highly concentrated at the upper
+end with a peak around 7 and range between 4 and 7. Free countries are concentrated at the lower end with a peak around 1 and range between 1 and 4.
 
-Compared to the Civil Liberties plot, the separation between groups is
-even more clear here. Not Free countries are more tightly clustered at
-the highest scores which suggests that Political Rights may be slightly
-more extreme across categories. Overall, both plots show a strong
-relationship between freedom status and these two variables with Free
-countries consistently having low scores and Not Free countries having
-high scores.
+Compared to the Civil Liberties plot, the separation between groups is even more clear here. Not Free countries are more tightly clustered at the highest scores which suggests that Political Rights may be slightly more extreme across categories. Overall, both plots show a strong relationship between freedom status and these two variables with Free countries consistently having low scores and Not Free countries having high scores.
 
-**Graph #4** The previous plots are concentrated around 2020 but they do
-not show how freedom changes over time. The next step is to look at
-whether there were periods with more Free or not Free countries from
-1995 to 2020.
+**Graph #4** The previous plots are concentrated around 2020 but they do not show how freedom changes over time. The next step is to look at whether there were periods with more Free or not Free countries from 1995 to 2020.
 
-How has the number of Free, Partly Free, and Not Free countries changed
-globally from 1995 to 2020?
+How has the number of Free, Partly Free, and Not Free countries changed globally from 1995 to 2020?
 
 ```{r}
 freedom_df_2 <- freedom |>
@@ -267,8 +223,7 @@ status_trend <- freedom_df_2 |>
   summarise(count = n())
 ```
 
-How has the number of Free, Partly Free, and Not Free countries changed
-globally from 1995 to 2020?
+How has the number of Free, Partly Free, and Not Free countries changed globally from 1995 to 2020?
 
 ```{r}
 ggplot(data=status_trend, aes(x = year, y = count, colour = Status)) +
@@ -284,20 +239,12 @@ ggplot(data=status_trend, aes(x = year, y = count, colour = Status)) +
 
 **Interpretation:**
 
-From the line plot, the period between 2005 and 2010 stands out as a
-strong period for global freedom. During this time, the number of Free
-countries is higher while the number of Not Free countries is lower.
-Partly Free countries are also relatively higher as well.
+From the line plot, the period between 2005 and 2010 stands out as a strong period for global freedom. During this time, the number of Free countries is higher while the number of Not Free countries is lower. Partly Free countries are also relatively higher as well.
 
-After about 2015 to 2020, this pattern begins to shift. The number of
-Free countries levels off or slightly declines, while Not Free countries
-increase.The line plot is useful because it clearly shows how these
-Status' change over time.
+After about 2015 to 2020, this pattern begins to shift. The number of Free countries levels off or slightly declines, while Not Free countries increase.The line plot is useful because it clearly shows how these Status' change over time.
 
-A next step is to look at these changes by region. For example,
-comparing 2005 to 2010 with 2015 to 2020 using average Civil Liberties
-or Political Rights scores. This can demonstrate which regions are
-driving these global trends.
+A next step is to look at these changes by region. For example,comparing 2005 to 2010 with 2015 to 2020 using average Civil Liberties
+or Political Rights scores. This can demonstrate which regions are driving these global trends.
 
 **Graph #5**
 
@@ -332,22 +279,11 @@ ggplotly(plot5, tooltip="label")
 
 **Interpretation:**
 
-This bar plot compares average Civil Liberties scores by region for 2005
-to 2010 and 2015 to 2020. We can see that most regions have higher
-scores in 2015 to 2020 which means civil liberties have declined over
-time. This supports the earlier trend we saw in the line plot.
+This bar plot compares average Civil Liberties scores by region for 2005 to 2010 and 2015 to 2020. We can see that most regions have higher scores in 2015 to 2020 which means civil liberties have declined over time. This supports the earlier trend we saw in the line plot.Oceania is the only exception where the pattern is not as clear. This could be due to countries like Papua New Guinea having a larger impact on the Oceania countries.
 
-Oceania is the only exception where the pattern is not as clear. This
-could be due to countries like Papua New Guinea having a larger impact
-on the Oceania countries.
+The bar plot works well for comparing regions and time periods, but it is harder to see the exact differences. Adding ggplotly helps with this as we can hover and see the actual values. Most regions increased by about 0.15 to 0.25 which shows a consistent decline in freedom.
 
-The bar plot works well for comparing regions and time periods, but it
-is harder to see the exact differences. Adding ggplotly helps with this
-as we can hover and see the actual values. Most regions increased by
-about 0.15 to 0.25 which shows a consistent decline in freedom.
-
-Now, it is important to check if the same trend appears for Political
-Rights in our next plot.
+Now, it is important to check if the same trend appears for Political Rights in our next plot.
 
 **Graph #6**
 
@@ -373,23 +309,14 @@ ggplotly(plot6, tooltip="label")
 
 **Interpretation:**
 
-This bar plot compares average Political Rights scores by region for
-2005 to 2010 and 2015 to 2020. Most regions have higher scores in 2015
-to 2020 which illustrates political rights have declined over time. This
-trend is very similar to what we saw with Civil Liberties.
+This bar plot compares average Political Rights scores by region for 2005 to 2010 and 2015 to 2020. Most regions have higher scores in 2015 to 2020 which illustrates political rights have declined over time. This trend is very similar to what we saw with Civil Liberties.
 
-Oceania is again an exception, where the pattern is less clear and
-possibly due to countries like Papua New Guinea affecting the Oceania
+Oceania is again an exception, where the pattern is less clear and possibly due to countries like Papua New Guinea affecting the Oceania
 average.
 
-The bar plot is good for comparing regions but it is harder to see exact
-differences. Again, using ggplotly helps by showing exact values. Most
-regions increased by about 0.10 to 0.30 which showed a small decline in
-freedom. Asia changed the least, while the Americas and Oceania changed
-the most.
+The bar plot is good for comparing regions but it is harder to see exact differences. Again, using ggplotly helps by showing exact values. Most regions increased by about 0.10 to 0.30 which showed a small decline in freedom. Asia changed the least, while the Americas and Oceania changed the most.
 
-Now we can go further and look at how Civil Liberties and Political
-Rights change over time for individual countries.
+Now we can go further and look at how Civil Liberties and Political Rights change over time for individual countries.
 
 **Graph #7** How do civil liberties and political rights vary across
 countries and regions over time ?
@@ -417,7 +344,7 @@ ui <- fluidPage(
       selectizeInput("countrychoose", label = "Choose Countries",
                      choices = unique(freedom_long$country),
                      selected = c("United States of America"),
-                     multiple = TRUE),
+                     multiple = FALSE),
       
       sliderInput("yearchoose", "Select Year:",
                   min = min(freedom_long$year),
