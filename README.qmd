@@ -8,6 +8,7 @@ format: gfm
 ```{r}
 #| message: false
 #| warning: false
+#| include: false
 library(tidyverse)
 library(ggplot2)
 library(readr)
@@ -17,6 +18,8 @@ library(dplyr)
 library(forcats)
 library(here)
 library(plotly)
+
+#asked chat how to hide data
 
 freedom <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-02-22/freedom.csv')
 
